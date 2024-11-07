@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: '3.3'
           bundler-cache: true
       - run: bundle exec rubocop
 
@@ -26,6 +26,8 @@ jobs:
           - gemfiles/rails_51.gemfile
         include:
           # ruby 3.x
+          - ruby: '3.3'
+            gemfile: gemfiles/rails_80.gemfile
           - ruby: '3.2'
             gemfile: gemfiles/rails_72.gemfile
           - ruby: '3.2'

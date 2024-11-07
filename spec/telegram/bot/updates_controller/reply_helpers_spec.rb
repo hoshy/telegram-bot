@@ -6,7 +6,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
   let(:respond_type) { :photo }
   let(:result) { double(:result) }
   let(:payload_type) { :message }
-  let(:payload) { {message_id: double(:message_id), chat: chat} }
+  let(:payload) { {message_id: double(:message_id), chat:} }
   let(:chat) { {id: double(:chat_id)} }
 
   shared_examples 'missing chat' do
@@ -66,7 +66,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
     end
 
     context 'when message is present' do
-      let(:payload) { {message: super().merge(chat: chat)} }
+      let(:payload) { {message: super().merge(chat:)} }
       it 'sets chat_id & message_id' do
         expect(bot).to receive("edit_message_#{type}").with(params.merge(
           message_id: payload[:message][:message_id],

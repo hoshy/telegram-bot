@@ -2,7 +2,7 @@
 
 # Shared helpers for testing message updates.
 RSpec.shared_context 'telegram/bot/message_helpers' do
-  let(:default_message_options) { {from: from, chat: chat} }
+  let(:default_message_options) { {from:, chat:} }
   let(:from) { {id: from_id} }
   let(:from_id) { 123 }
   let(:chat) { {id: chat_id} }
@@ -10,7 +10,7 @@ RSpec.shared_context 'telegram/bot/message_helpers' do
 
   # Shortcut for dispatching messages with default params.
   def dispatch_message(text, options = {})
-    dispatch message: default_message_options.merge(options).merge(text: text)
+    dispatch message: default_message_options.merge(options).merge(text:)
   end
 
   # Dispatch command message.
@@ -23,6 +23,6 @@ RSpec.shared_context 'telegram/bot/message_helpers' do
   # Matcher to check response. Make sure to define `let(:chat_id)`.
   def respond_with_message(expected = Regexp.new(''))
     raise 'Define chat_id to use respond_with_message' unless defined?(chat_id)
-    send_telegram_message(bot, expected, chat_id: chat_id)
+    send_telegram_message(bot, expected, chat_id:)
   end
 end

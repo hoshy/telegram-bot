@@ -54,7 +54,7 @@ module Telegram
           super || (context && begin
             args = payload['text']&.split || []
             action = action_for_message_context(context)
-            [[action, {type: :message_context, context: context}], args]
+            [[action, {type: :message_context, context:}], args]
           end)
         end
 

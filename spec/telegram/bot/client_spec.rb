@@ -34,7 +34,7 @@ RSpec.describe Telegram::Bot::Client do
     end
 
     context 'when input is a hash' do
-      let(:input) { {token: token, 'username' => username, other: :options} }
+      let(:input) { {token:, 'username' => username, other: :options} }
 
       it 'passes it with symbolized keys' do
         expect(described_class).to receive(:new).with(**input.symbolize_keys) { result }
@@ -103,11 +103,11 @@ RSpec.describe Telegram::Bot::Client do
     context 'with custom server' do
       let(:server) { 'http://my.server' }
       let(:args) { [token, username] }
-      let(:kwargs) { {server: server} }
+      let(:kwargs) { {server:} }
       its(:base_uri) { should eq "#{server}/bot#{token}/" }
 
       context 'and hash options' do
-        let(:kwargs) { {token: token, username: username, server: server} }
+        let(:kwargs) { {token:, username:, server:} }
         its(:base_uri) { should eq "#{server}/bot#{token}/" }
       end
     end
@@ -119,7 +119,7 @@ RSpec.describe Telegram::Bot::Client do
     let(:url) do
       base_uri = format(described_class::URL_TEMPLATE,
         server: described_class::SERVER,
-        token: token,
+        token:,
       )
       "#{base_uri}#{action}"
     end

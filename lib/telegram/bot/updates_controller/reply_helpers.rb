@@ -12,7 +12,7 @@ module Telegram
         def respond_with(type, params)
           chat = self.chat
           chat_id = chat && chat['id'] or raise 'Can not respond_with when chat is not present'
-          bot.public_send("send_#{type}", params.merge(chat_id: chat_id))
+          bot.public_send("send_#{type}", params.merge(chat_id:))
         end
 
         # Same as respond_with but also sets `reply_to_message_id`.
@@ -27,7 +27,7 @@ module Telegram
         def answer_inline_query(results, params = {})
           params = params.merge(
             inline_query_id: payload['id'],
-            results: results,
+            results:,
           )
           bot.answer_inline_query(params)
         end
@@ -36,7 +36,7 @@ module Telegram
         def answer_callback_query(text, params = {})
           params = params.merge(
             callback_query_id: payload['id'],
-            text: text,
+            text:,
           )
           bot.answer_callback_query(params)
         end
@@ -45,7 +45,7 @@ module Telegram
         def answer_pre_checkout_query(ok, params = {})
           params = params.merge(
             pre_checkout_query_id: payload['id'],
-            ok: ok,
+            ok:,
           )
           bot.answer_pre_checkout_query(params)
         end
@@ -53,7 +53,7 @@ module Telegram
         def answer_shipping_query(ok, params = {})
           params = params.merge(
             shipping_query_id: payload['id'],
-            ok: ok,
+            ok:,
           )
           bot.answer_shipping_query(params)
         end

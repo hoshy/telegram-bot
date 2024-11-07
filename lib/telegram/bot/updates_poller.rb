@@ -37,8 +37,8 @@ module Telegram
         @reload = options.fetch(:reload) { defined?(Rails.env) && Rails.env.development? }
       end
 
-      def log(&block)
-        logger&.info(&block)
+      def log(&)
+        logger&.info(&)
       end
 
       def start
@@ -70,7 +70,7 @@ module Telegram
       end
 
       def fetch_updates(offset = self.offset)
-        response = bot.async(false) { bot.get_updates(offset: offset, timeout: timeout) }
+        response = bot.async(false) { bot.get_updates(offset:, timeout:) }
         response.is_a?(Array) ? response : response['result']
       rescue Timeout::Error
         log { 'Fetch timeout' }
@@ -104,8 +104,8 @@ module Telegram
       end
 
       if defined?(Rails.application) && Rails.application.respond_to?(:reloader)
-        def reloading_code(&block)
-          Rails.application.reloader.wrap(&block)
+        def reloading_code(&)
+          Rails.application.reloader.wrap(&)
         end
       else
         def reloading_code

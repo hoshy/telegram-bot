@@ -46,9 +46,9 @@ module Telegram
           end
         end
 
-        def perform(client_id, *args)
+        def perform(client_id, *)
           client = self.class.client_class.wrap(client_id.to_sym)
-          client.async(false) { client.request(*args) }
+          client.async(false) { client.request(*) }
         end
       end
 
@@ -148,11 +148,11 @@ module Telegram
       end
 
       # Uses job if #async is set.
-      def request(*args)
+      def request(*)
         job_class = async
         return super unless job_class
         raise 'Can not enqueue job without client id' unless id
-        job_class.perform_later(id.to_s, *self.class.prepare_async_args(*args))
+        job_class.perform_later(id.to_s, *self.class.prepare_async_args(*))
       end
     end
   end

@@ -7,8 +7,8 @@ RSpec.describe Telegram::Bot::RoutesHelper do
   let(:other_bot) { create_bot('other_token') }
   let(:bots) { {default: bot, other: other_bot} }
 
-  def create_bot(*args)
-    Telegram::Bot::Client.new(*args)
+  def create_bot(*)
+    Telegram::Bot::Client.new(*)
   end
 
   describe '.route_name_for_bot' do

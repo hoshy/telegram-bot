@@ -38,7 +38,7 @@ RSpec.describe Telegram::Bot::UpdatesController::Session do
     end
 
     def build_message(text, from)
-      deep_stringify(message: {text: text, from: from})
+      deep_stringify(message: {text:, from:})
     end
 
     it 'stores session between requests' do

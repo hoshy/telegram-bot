@@ -14,10 +14,10 @@ module Telegram
           url = routes.send("#{route_name}_url")
           say("Setting webhook for #{key}...")
           bot.set_webhook(
-            url: url,
+            url:,
             certificate: cert,
             ip_address: ENV.fetch('IP_ADDRESS', nil),
-            drop_pending_updates: drop_pending_updates,
+            drop_pending_updates:,
           )
         end
       end
@@ -25,7 +25,7 @@ module Telegram
       def delete_webhook
         each_bot do |key, bot|
           say("Deleting webhook for #{key}...")
-          bot.delete_webhook(drop_pending_updates: drop_pending_updates)
+          bot.delete_webhook(drop_pending_updates:)
         end
       end
 

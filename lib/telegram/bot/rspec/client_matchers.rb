@@ -82,8 +82,8 @@ module Telegram
             expected_number.public_send(expectation_method, matching_requests_count)
           end
 
-          def with(*args, &block)
-            @arg_list_matcher = ArgListMatcher.new(*args, &block)
+          def with(*, &)
+            @arg_list_matcher = ArgListMatcher.new(*, &)
             self
           end
 
@@ -143,8 +143,8 @@ module Telegram
         def send_telegram_message(bot, text = nil, options = {})
           description = "send telegram message #{text.inspect}"
           text = a_string_matching(text) if text.is_a?(Regexp)
-          options = options.merge(text: text) if text
-          MakeTelegramRequest.new(bot, :sendMessage, description: description).
+          options = options.merge(text:) if text
+          MakeTelegramRequest.new(bot, :sendMessage, description:).
             with(hash_including(options))
         end
       end

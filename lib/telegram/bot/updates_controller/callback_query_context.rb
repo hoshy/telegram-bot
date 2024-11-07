@@ -20,7 +20,7 @@ module Telegram
           if context
             action_name = "#{context}_callback_query"
             if action_method?(action_name)
-              action_options = {type: :callback_query_context, context: context}
+              action_options = {type: :callback_query_context, context:}
               return [[action_name, action_options], [new_data]]
             end
           end

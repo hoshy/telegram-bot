@@ -13,11 +13,11 @@ module Telegram
         end
 
         class << self
-          def instrument(action, *args, &block)
+          def instrument(action, *, &)
             ActiveSupport::Notifications.instrument(
               "#{action}.updates_controller.bot.telegram",
-              *args,
-              &block
+              *,
+              &
             )
           end
         end
@@ -26,25 +26,23 @@ module Telegram
           raw_payload = {
             controller: self.class.name,
             action: action_name,
-            update: update,
+            update:,
           }
           Instrumentation.instrument(:start_processing, raw_payload.dup)
           Instrumentation.instrument(:process_action, raw_payload) do |payload|
-            begin
-              super
-            ensure
-              append_info_to_payload(payload)
-            end
+            super
+          ensure
+            append_info_to_payload(payload)
           end
         end
 
         def respond_with(type, *)
-          Instrumentation.instrument(:respond_with, type: type) { super }
+          Instrumentation.instrument(:respond_with, type:) { super }
         end
 
         %i[answer_callback_query answer_inline_query].each do |type|
           define_method(type) do |*args|
-            Instrumentation.instrument(:respond_with, type: type) { super(*args) }
+            Instrumentation.instrument(:respond_with, type:) { super(*args) }
           end
         end
 
@@ -52,7 +50,7 @@ module Telegram
 
         # A hook invoked every time a before callback is halted.
         def halted_callback_hook(filter, *)
-          Instrumentation.instrument(:halted_callback, filter: filter)
+          Instrumentation.instrument(:halted_callback, filter:)
         end
 
         # A hook which allows you to clean up any time taken into account in

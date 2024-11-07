@@ -30,7 +30,7 @@ RSpec.describe Telegram::Bot::UpdatesController::TypedUpdate do
       removed_chat_boost
       pre_checkout_query
     ]).
-      map { |x| [x, Telegram::Bot::Types.const_get(x.camelize)] }.to_h.
+      to_h { |x| [x, Telegram::Bot::Types.const_get(x.camelize)] }.
       merge(
         'chat_member' => Telegram::Bot::Types::ChatMemberUpdated
       )

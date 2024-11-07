@@ -17,7 +17,7 @@ RSpec.describe 'Integration: message helpers', telegram_bot: :poller do
     it 'invokes dispatch' do
       expect(self).to receive(:dispatch).with(
         message: hash_including(default_message_options.merge(
-          text: text,
+          text:,
         )),
       ) { result }
       expect(subject.call).to eq result
@@ -28,7 +28,7 @@ RSpec.describe 'Integration: message helpers', telegram_bot: :poller do
       it 'invokes dispatch' do
         expect(self).to receive(:dispatch).with(
           message: hash_including(default_message_options.merge(
-            text: text,
+            text:,
           ).merge(options)),
         ) { result }
         expect(subject.call).to eq result

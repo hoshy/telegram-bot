@@ -64,7 +64,7 @@ RSpec.describe Telegram::Bot::ConfigMethods do
 
       context 'in rails environment' do
         before { stub_const('Rails', double(application: double(app_stub))) }
-        let(:app_stub) { {secrets: secrets} }
+        let(:app_stub) { {secrets:} }
         let(:secrets) { {} }
         it { should eq({}) }
 
@@ -89,7 +89,7 @@ RSpec.describe Telegram::Bot::ConfigMethods do
           end
 
           context 'and credentials (>= 5.2)' do
-            let(:app_stub) { super().merge(credentials: credentials) }
+            let(:app_stub) { super().merge(credentials:) }
             let(:credentials) { {telegram: credentials_config} }
             let(:credentials_config) { {bot: double(:credentials_bot_config)} }
             it { should include default: credentials_config[:bot] }

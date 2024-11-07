@@ -20,7 +20,7 @@ headers = doc.css('h3, h4').
   map { |g| g.map(&:text) }
 
 # Method starts with lowercase and does not have spaces.
-NOT_METHOD_REGEXP = /(\A[^a-z])|\s/.freeze
+NOT_METHOD_REGEXP = /(\A[^a-z])|\s/
 
 # Filter method names.
 method_list = headers.

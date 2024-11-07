@@ -20,12 +20,12 @@ module Telegram
 
       class << self
         # Accepts different options to initialize bot.
-        def wrap(input, **options)
+        def wrap(input, **)
           case input
           when Symbol then by_id(input) or raise "#{name} #{input.inspect} not configured"
           when self   then input
-          when Hash   then new(**input.symbolize_keys, **options)
-          else        new(input, **options)
+          when Hash   then new(**input.symbolize_keys, **)
+          else        new(input, **)
           end
         end
 
@@ -61,7 +61,7 @@ module Telegram
         @client = HTTPClient.new
         @token = token || options[:token]
         @username = username || options[:username]
-        @base_uri = format(URL_TEMPLATE, server: server, token: self.token)
+        @base_uri = format(URL_TEMPLATE, server:, token: self.token)
       end
 
       def request(action, body = {})

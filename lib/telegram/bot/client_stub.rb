@@ -7,11 +7,11 @@ module Telegram
       attr_reader :requests
 
       module StubbedConstructor
-        def new(*args, **kwargs)
+        def new(*, **)
           if self == ClientStub || !ClientStub.stub_all?
             super
           else
-            ClientStub.new(*args, **kwargs)
+            ClientStub.new(*, **)
           end
         end
       end

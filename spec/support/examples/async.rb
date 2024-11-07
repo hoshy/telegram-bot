@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'async' do |request_args:|
-  let(:instance) { described_class.new(token: token, id: id, async: async) }
+  let(:instance) { described_class.new(token:, id:, async:) }
   let(:id) { :default_bot }
   let(:async) { true }
   let!(:application_job_class) do

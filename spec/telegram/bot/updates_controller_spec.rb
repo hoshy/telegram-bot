@@ -7,7 +7,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
     subject { controller.action_for_payload }
 
     def stub_payload(*fields)
-      fields.map { |x| [x, double(x)] }.to_h
+      fields.to_h { |x| [x, double(x)] }
     end
 
     context 'when payload is inline_query' do
@@ -159,7 +159,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
     end
 
     context 'when initialized without update' do
-      let(:controller) { controller_class.new(bot, from: from, chat: chat) }
+      let(:controller) { controller_class.new(bot, from:, chat:) }
       let(:from) { {'id' => 'user_id'} }
       let(:chat) { {'id' => 'chat_id'} }
       its(:call) { should eq [from, chat, args] }
@@ -169,12 +169,12 @@ RSpec.describe Telegram::Bot::UpdatesController do
   describe '#initialize' do
     subject { controller }
     let(:payload_type) { 'message' }
-    let(:payload) { deep_stringify(chat: chat, from: from) }
+    let(:payload) { deep_stringify(chat:, from:) }
     let(:chat) { double(:chat) }
     let(:from) { double(:from) }
 
-    def self.with_reinitialize(&block)
-      instance_eval(&block)
+    def self.with_reinitialize(&)
+      instance_eval(&)
       context 'when re-initialized' do
         let(:controller) do
           initial_update = deep_stringify message: {
@@ -185,7 +185,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
           described_class.new(double(:other_bot), initial_update).
             tap { |x| x.send(:initialize, *controller_args) }
         end
-        instance_eval(&block)
+        instance_eval(&)
       end
     end
 
@@ -201,7 +201,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
     end
 
     context 'when options hash is given' do
-      let(:controller_args) { [bot, {from: from, chat: chat}] }
+      let(:controller_args) { [bot, {from:, chat:}] }
       with_reinitialize do
         its(:bot) { should eq bot }
         its(:update) { should eq nil }
@@ -229,7 +229,7 @@ RSpec.describe Telegram::Bot::UpdatesController do
       it { should eq nil }
 
       context 'but has `message`' do
-        let(:payload) { {message: message} }
+        let(:payload) { {message:} }
         let(:message) { {text: 'Hello bot!'} }
         it { should eq nil }
 
